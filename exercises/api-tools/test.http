@@ -1,0 +1,9 @@
+GET https://jsonplaceholder.typicode.com/albums
+
+#
+
+GET https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=1
+
+#
+
+GET https://collectionapi.metmuseum.org/public/collection/v1/departments

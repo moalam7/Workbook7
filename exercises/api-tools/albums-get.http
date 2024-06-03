@@ -1,0 +1,6 @@
+GET https://jsonplaceholder.typicode.com/albums
+//Gave me all the JS Objects in an array
+//But JSON, so a big string
+
+
+//let albums = getAlbums()
