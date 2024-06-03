@@ -1,0 +1,219 @@
+-----------------------MODULE 1 - JSON --------------------------------
+JSON - JavaScript Object Notation - is a standard format for repreenting text-based structured data.
+
+- Objects are stored within curly braces
+- Data is in property / value pairs
+- Based on JS object syntax
+
+Example:
+{
+"employeeID" : "3",
+"name" : "Ian",
+"jobTitle" : "Stock Broker",
+"payRate" : 108.17
+};
+
+JSON values must be one of the following data types:
+
+- string
+- number
+- Boolean
+- array
+- null
+- another JSON object
+
+Another Example:
+{
+"department" : "Texas State College",
+"location" : "Joshua Campus",
+"faculty" : [
+{
+"name" : "Dr. Siddalee Grace",
+"department" : "Marketing",
+"rank" : "Associate Professor",
+"phone" : "(979)555-1212"
+},
+{
+"name" : "Dr. Pursalane Faye",
+"department" : "Library Science",
+"rank" : "Professor",
+"phone" : "(979)555-1213"
+}
+{
+"name" : "Dr. Zephaniah Hughes",
+"department" : "Engineering Tech",
+"rank" : "Assistant Professor",
+"phone" : "(979)555-1214"
+}
+]
+}
+
+JSON is often used for transmitting data across web servers
+
+To transmit JSON data over a netowrk, you must convert it to a string
+
+- This is usually known as stringification
+
+Then, when you want to access stringified JSON data, you must convert it back to a native JS Object
+
+- This is usually known as parsing
+
+The following JS methods will help you with these tasks:
+
+- JSON.stringify()
+- JSON.parse()
+
+              STRINGIFYING JSON
+
+Use JSON.stringify() to create JSON string from a JS Object
+
+- You will see this when we start calling server-side methids to retrieve data from or pass data to a REST API
+  EXAMPLE:
+
+let job = {
+title : "Web Designer",
+startDate : "October 2022",
+company : "AT&T",
+minSalary : 52000,
+maxSalary : 86000
+};
+let str = JSON.stringify(job);
+console.log(str);
+
+STRING CONTAINS - OUTPUT
+{
+"title" : "Web Designer",
+"startDate" : "October 2022",
+"company" : "AT&T",
+"minSalary" : 52000,
+"maxSalary" : 86000
+}
+
+You can provide a filter to stringify() so that it only includes the properties specified
+
+- Filter is specified as a JS array of quoted property names surrounded by square brackets
+  EXAMPLE:
+
+let job = {
+title : "Web Designer",
+startDate : "October 2022",
+company : "AT&T",
+minSalary : 52000,
+maxSalary : 86000
+};
+let filter = ["title", "company"];
+let str = JSON.stringify(job, filter);
+
+let str = JSON.stringify(job);
+console.log(str);
+// only the title and company properties will be in
+// the string
+
+STRING CONTAINS - OUTPUT
+{
+"title" : "Web Designer",
+"company" : "AT&T"
+}
+
+              PARSING JSON
+
+Use JSON.parse() to convert JSON string back into a JS Object
+
+- If the string is not valid JSON, an error is generated
+- ES6 allows multilining strings if they are surrounded by back ticks (`)
+  EXAMPLE:
+
+let str = `{"title" : "Web Designer",
+ "startDate" : "October 2022",
+ "company" : "AT&T",
+ "minSalary" : 52000,
+ "maxSalary" : 86000
+ }`;
+
+let job = JSON.parse(str);
+console.log(job.title);
+console.log(job.company);
+
+-----------------------MODULE 2 - AJAX AND REST APIS ------------------------
+AJAX is a technique that allows JS to send asynchronous HTTP requests(in the background) to a web server that manages back-end data
+
+- AJAX stands for Asynchronous JS And XML
+
+AJAX lets us FETCH data based on the user interactions and then dynamically update the page
+Example? Just think about how Google's search page works
+
+- As you type characters, the list of suggestions is automatically updated without any page flicekr
+
+AJAX can also be used to SEND data to a web server that manages back-end data
+
+Even though the X in AJAX stands for XML, it can be uised to send.recieve both XML and JSON data
+
+EXAMPLES OF AJAX:
+
+- Autocomplete: Google Search Bar
+- Real-time Updates - ESPN Sports Page
+- Chat Window, E-Commerce site, uses AJAX 2 ways, sends messages to web server +\_ fetches live agent's responses from web server
+
+              REST APIS
+
+  An API is a collection of functions that allow clients and servers to exchange specific information
+  API stands for Application Programming Interface
+
+The API lives on a server
+
+- A client makes calls to it
+- The API returns information
+
+REST - REST is a set of rules about HOW developers create APIs on a web server
+
+One of the REST rules is that you get a specific piece of data(or resource) when you communicate with a specific URL(or endpoint)
+
+- REST expects HTTP requests to be sent to a specific URL
+- The data returned is included in an HTTP response
+
+Another REST rule is that the HTTP method of the request tells the endpoint what action you want it to perform
+
+- The HTTP GET verb means you are requesting a resources
+- The HTTP POST verb means you are sending a new resource for insertion
+- The HTTP PUT verb means you are sending updates to a resource
+- The HTTP DELETE verb means you are requesting a resource be deleted
+
+One reason REST is popular is that it adds almost no overhead to the HTTP request/response model
+
+REST APIs have very unique URLS with specific meanings
+EXAMPLE:
+Gets customers gets ALL customers
+GET / api / customers
+
+Gets customer 101
+GET / api / customers / 101
+
+Inserts accompanying body data into the customer data store
+POST / api / customers
+
+Updates customer data store from accompanying body data
+PUT / api / customers
+
+Deletes customer 101
+DELETE / api / customers / 101
+
+\*\*IMPORTANT: You do not have to design the URL with the /api segment
+
+- However, many API developers use that convention
+
+          HTTP Requests and HTTP Responses
+
+An HTTP request contains 4 pieces of information:
+
+- The endpoint(URL)
+- The HTTP method
+- Series of HTTP headers
+- The data(message body)
+
+An HTTP response contains 3 pieces of information:
+
+- Status line
+- Series of HTTP headers
+- Returned data(message body)
+
+HTTP request and response headers are strings that specify additional information
