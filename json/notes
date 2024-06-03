@@ -1,0 +1,63 @@
+JSON - JavaScript Object Notation - is a standard format for repreenting text-based structured data.
+
+- Objects are stored within curly braces
+- Data is in property / value pairs
+- Based on JS object syntax
+
+Example:
+{
+"employeeID" : "3",
+"name" : "Ian",
+"jobTitle" : "Stock Broker",
+"payRate" : 108.17
+};
+
+JSON values must be one of the following data types:
+
+- string
+- number
+- Boolean
+- array
+- null
+- another JSON object
+
+Another Example:
+{
+"department" : "Texas State College",
+"location" : "Joshua Campus",
+"faculty" : [
+{
+"name" : "Dr. Siddalee Grace",
+"department" : "Marketing",
+"rank" : "Associate Professor",
+"phone" : "(979)555-1212"
+},
+{
+"name" : "Dr. Pursalane Faye",
+"department" : "Library Science",
+"rank" : "Professor",
+"phone" : "(979)555-1213"
+}
+{
+"name" : "Dr. Zephaniah Hughes",
+"department" : "Engineering Tech",
+"rank" : "Assistant Professor",
+"phone" : "(979)555-1214"
+}
+]
+}
+
+JSON is often used for transmitting data across web servers
+
+To transmit JSON data over a netowrk, you must convert it to a string
+
+- This is usually known as stringification
+
+Then, when you want to access stringified JSON data, you must convert it back to a native JS Object
+
+- This is usually known as parsing
+
+The following JS methods will help you with these tasks:
+
+- JSON.stringify()
+- JSON.parse()
