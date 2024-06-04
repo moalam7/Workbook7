@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="todo.html">Todo</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container mt-5">
+      <h1>Todo Fetcher</h1>
+      <div class="form-group">
+        <label for="todo-id">Enter Todo ID:</label>
+        <input type="number" id="todo-id" class="form-control" placeholder="Enter todo ID" />
+      </div>
+      <button id="fetch-todo" class="btn btn-primary">Fetch Todo</button>
+      <div id="todo-info" class="mt-3"></div>
+    </div>
+    <script>
+      document.getElementById("fetch-todo").addEventListener("click", function () {
+        const todoId = document.getElementById("todo-id").value;
+        const todoInfoDiv = document.getElementById("todo-info");
+
+        if (todoId) {
+          fetch(`http://jsonplaceholder.typicode.com/todos/${todoId}`)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              todoInfoDiv.innerHTML = `
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="card-title">Todo ID: ${data.id}</h5>
+                    <p class="card-text">User ID: ${data.userId}</p>
+                    <p class="card-text">Title: ${data.title}</p>
+                    <p class="card-text">Completed: ${data.completed}</p>
+                  </div>
+                </div>
+              `;
+            })
+            .catch((error) => {
+              todoInfoDiv.innerHTML = `<div class="alert alert-danger" role="alert">${error.message}</div>`;
+            });
+        } else {
+          todoInfoDiv.innerHTML = `<div class="alert alert-warning" role="alert">Please enter a valid Todo ID.</div>`;
+        }
+      });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

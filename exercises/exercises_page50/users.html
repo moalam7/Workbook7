@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="todo.html">Todo</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="users.html">Users</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container mt-5">
+      <h1>User Fetcher</h1>
+      <div class="form-group">
+        <label for="user-id">Enter User ID:</label>
+        <input type="number" id="user-id" class="form-control" placeholder="Enter user ID" />
+      </div>
+      <button id="fetch-user" class="btn btn-primary">Fetch User</button>
+      <button id="clear-table" class="btn btn-secondary ml-2">Clear Table</button>
+      <div id="message" class="mt-3"></div>
+      <table class="table table-striped mt-3" id="user-table">
+        <thead class="thead-dark">
+          <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Phone Number</th>
+            <th>Website</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data will be inserted here -->
+        </tbody>
+      </table>
+    </div>
+    <script>
+      document.getElementById("fetch-user").addEventListener("click", function () {
+        const userId = document.getElementById("user-id").value;
+        const messageDiv = document.getElementById("message");
+        const tableBody = document.getElementById("user-table").getElementsByTagName("tbody")[0];
+
+        messageDiv.innerHTML = ""; // Clear any previous messages
+
+        if (userId) {
+          fetch(`https://jsonplaceholder.typicode.com/users/${userId}`)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const newRow = tableBody.insertRow();
+
+              const nameCell = newRow.insertCell(0);
+              const usernameCell = newRow.insertCell(1);
+              const emailCell = newRow.insertCell(2);
+              const addressCell = newRow.insertCell(3);
+              const phoneCell = newRow.insertCell(4);
+              const websiteCell = newRow.insertCell(5);
+
+              nameCell.textContent = data.name;
+              usernameCell.textContent = data.username;
+              emailCell.textContent = data.email;
+              addressCell.textContent = `${data.address.street}, ${data.address.suite}, ${data.address.city}, ${data.address.zipcode}`;
+              phoneCell.textContent = data.phone;
+              websiteCell.innerHTML = `<a href="http://${data.website}" target="_blank">${data.website}</a>`;
+            })
+            .catch((error) => {
+              messageDiv.innerHTML = `<div class="alert alert-danger" role="alert">${error.message}</div>`;
+            });
+        } else {
+          messageDiv.innerHTML = `<div class="alert alert-warning" role="alert">Please enter a valid User ID.</div>`;
+        }
+      });
+
+      document.getElementById("clear-table").addEventListener("click", function () {
+        const tableBody = document.getElementById("user-table").getElementsByTagName("tbody")[0];
+        tableBody.innerHTML = ""; // Clear all rows from the table body
+      });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
